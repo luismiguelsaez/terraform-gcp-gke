@@ -1,11 +1,11 @@
-resource "helm_release" "nginx_ingress" {
-  name       = "nginx-ingress-controller"
+resource "helm_release" "spark_operator" {
+  name       = "spark-operator-cluster"
 
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "nginx-ingress-controller"
+  repository = "https://googlecloudplatform.github.io/spark-on-k8s-operator"
+  chart      = "spark-operator/spark-operator"
 
   set {
-    name  = "service.type"
-    value = "ClusterIP"
+    name  = "sparkJobNamespace"
+    value = "SparkCluster"
   }
 }
