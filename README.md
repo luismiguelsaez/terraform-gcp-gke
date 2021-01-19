@@ -15,5 +15,5 @@ terraform apply
 
 ### Get credentials
 ```
-gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name) --region $(terraform output region)
+gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name) --region $(terraform output kubernetes_cluster_region)
 ```
