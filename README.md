@@ -15,5 +15,16 @@ terraform apply
 
 ### Get credentials
 ```
-gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name) --region $(terraform output kubernetes_cluster_region)
+gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name | sed 's/"//g') --region $(terraform output kubernetes_cluster_region | sed 's/"//g')
+```
+
+### Install chart ( https://github.com/GoogleCloudPlatform/spark-on-k8s-operator )
+```
+helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator
+helm install my-release spark-operator/spark-operator
+```
+
+### Create CRD
+```
+k apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/spark-on-k8s-operator/master/examples/spark-pi-custom-resource.yaml
 ```
