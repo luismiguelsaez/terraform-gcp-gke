@@ -4,4 +4,5 @@ module "cluster" {
     control_node_number = 2
     worker_node_number = 3
     worker_node_instance_type = "e2-medium"
+    autoscaling_resource_enabled = true
 }
