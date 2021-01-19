@@ -24,6 +24,12 @@ helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-
 helm install my-release spark-operator/spark-operator
 ```
 
+### Service account
+```
+kubectl create serviceaccount spark
+kubectl create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default
+```
+
 ### Create CRD
 ```
 k apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/spark-on-k8s-operator/master/examples/spark-pi-custom-resource.yaml

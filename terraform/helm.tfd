@@ -1,8 +1,8 @@
-resource "helm_release" "spark_operator" {
+resource "helm_release" "sparkoperator" {
   name       = "sparkoperator"
 
   repository = "https://googlecloudplatform.github.io/spark-on-k8s-operator"
-  chart      = "spark-operator/spark-operator"
+  chart      = "spark-operator"
 
   set {
     name  = "sparkJobNamespace"

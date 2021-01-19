@@ -1,0 +1,29 @@
+❯ 21/01/19 13:11:46 INFO SparkKubernetesClientFactory: Auto-configuring K8S client using current context from users K8S config file
+21/01/19 13:11:46 INFO KerberosConfDriverFeatureStep: You have not specified a krb5.conf file locally or via a ConfigMap. Make sure that you have the krb5.conf locally on the driver image.
+Exception in thread "main" io.fabric8.kubernetes.client.KubernetesClientException: Failure executing: POST at: https://10.115.240.1/api/v1/namespaces/default/pods. Message: Forbidden!Configured service account doesn't have access. Service account may have been revoked. pods "spark-pi-custom-resource-driver" is forbidden: error looking up service account default/spark: serviceaccount "spark" not found.
+  at io.fabric8.kubernetes.client.dsl.base.OperationSupport.requestFailure(OperationSupport.java:568)
+  at io.fabric8.kubernetes.client.dsl.base.OperationSupport.assertResponseCode(OperationSupport.java:505)
+  at io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleResponse(OperationSupport.java:471)
+  at io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleResponse(OperationSupport.java:430)
+  at io.fabric8.kubernetes.client.dsl.base.OperationSupport.handleCreate(OperationSupport.java:251)
+  at io.fabric8.kubernetes.client.dsl.base.BaseOperation.handleCreate(BaseOperation.java:815)
+  at io.fabric8.kubernetes.client.dsl.base.BaseOperation.create(BaseOperation.java:333)
+  at org.apache.spark.deploy.k8s.submit.Client.$anonfun$run$2(KubernetesClientApplication.scala:130)
+  at org.apache.spark.deploy.k8s.submit.Client.$anonfun$run$2$adapted(KubernetesClientApplication.scala:129)
+  at org.apache.spark.util.Utils$.tryWithResource(Utils.scala:2539)
+  at org.apache.spark.deploy.k8s.submit.Client.run(KubernetesClientApplication.scala:129)
+  at org.apache.spark.deploy.k8s.submit.KubernetesClientApplication.$anonfun$run$4(KubernetesClientApplication.scala:221)
+  at org.apache.spark.deploy.k8s.submit.KubernetesClientApplication.$anonfun$run$4$adapted(KubernetesClientApplication.scala:215)
+  at org.apache.spark.util.Utils$.tryWithResource(Utils.scala:2539)
+  at org.apache.spark.deploy.k8s.submit.KubernetesClientApplication.run(KubernetesClientApplication.scala:215)
+  at org.apache.spark.deploy.k8s.submit.KubernetesClientApplication.start(KubernetesClientApplication.scala:188)
+  at org.apache.spark.deploy.SparkSubmit.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:928)
+  at org.apache.spark.deploy.SparkSubmit.doRunMain$1(SparkSubmit.scala:180)
+  at org.apache.spark.deploy.SparkSubmit.submit(SparkSubmit.scala:203)
+  at org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:90)
+  at org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1007)
+  at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1016)
+  at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+21/01/19 13:11:47 INFO ShutdownHookManager: Shutdown hook called
+21/01/19 13:11:47 INFO ShutdownHookManager: Deleting directory /tmp/spark-8132048b-1378-4913-91b7-aeda8c18234a
+zsh: event not found: Configured
