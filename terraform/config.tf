@@ -16,11 +16,16 @@ provider "google" {
   project = var.project
 }
 
+data "google_client_config" "provider" {}
+
 provider "helm" {
   kubernetes {
     host = module.cluster.cluster_endpoint
+
+    token = data.google_client_config.provider.access_token
+
     client_certificate     = module.cluster.cluster_client_certificate
     client_key             = module.cluster.cluster_client_key
-    cluster_ca_certificate = module.cluster.cluster_ca_certificate
+    cluster_ca_certificate = base64decode( module.cluster.cluster_ca_certificate )
   }
 }

@@ -7,6 +7,10 @@ data "google_compute_zones" "available" {
   region  = var.region
 }
 
+locals {
+  autoscaling_resource_limits = var.autoscaling_resource_enabled ? var.autoscaling_resource_limits : []
+}
+
 resource "google_container_cluster" "this" {
   name     = var.cluster_name
   location = var.region
