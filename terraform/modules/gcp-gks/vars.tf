@@ -38,7 +38,7 @@ variable "autoscaling_resource_limits" {
         },
         {
             resource_type = "memory"
-            minimum       = 4
+            minimum       = 1
             maximum       = 32
         }
     ]
