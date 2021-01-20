@@ -26,8 +26,7 @@ helm install my-release spark-operator/spark-operator
 
 ### Service account
 ```
-kubectl create serviceaccount spark
-kubectl create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default
+kubectl apply -f k8s/spark-serviceaccount.yml
 ```
 
 ### Create CRD

@@ -8,6 +8,10 @@ terraform {
       source = "hashicorp/helm"
       version = "2.0.2"
     }
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = "1.13.3"
+    }
   }
 }
 
@@ -17,6 +21,18 @@ provider "google" {
 }
 
 data "google_client_config" "provider" {}
+
+provider "kubernetes" {
+  host = module.cluster.cluster_endpoint
+
+  token = data.google_client_config.provider.access_token
+
+  client_certificate     = module.cluster.cluster_client_certificate
+  client_key             = module.cluster.cluster_client_key
+  cluster_ca_certificate = base64decode( module.cluster.cluster_ca_certificate )
+
+  load_config_file = false
+}
 
 provider "helm" {
   kubernetes {
