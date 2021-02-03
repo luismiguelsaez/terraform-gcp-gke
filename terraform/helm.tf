@@ -1,37 +1,22 @@
-resource "kubernetes_service_account" "spark" {
-  metadata {
-    name = "spark"
-    namespace = "default"
-  }
+
+resource "helm_release" "prometheus" {
+  name       = "prometheus"
+
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "prometheus"
+  version    = "13.4.1"
 }
 
-resource "kubernetes_role_binding" "spark" {
-  metadata {
-    name      = "spark"
-    namespace = "default"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "cluster-admin"
-  }
-  subject {
-    kind      = "ServiceAccount"
-    name      = "spark"
-  }
-}
+resource "helm_release" "mongodb" {
+  name       = "mongodb"
 
-resource "helm_release" "sparkoperator" {
-  name       = "spark-operator"
+  repository = "ttps://charts.bitnami.com/bitnami"
+  chart      = "mongodb"
+  version    = "10.6.1"
 
-  #repository = "https://googlecloudplatform.github.io/spark-on-k8s-operator"
-  chart      = "spark-operator/spark-operator"
-  #version    = "1.0.5"
-
+  # https://github.com/bitnami/charts/tree/master/bitnami/mongodb/#parameters
   set {
-    name  = "sparkJobNamespace"
-    value = "sparkJobs"
+    name = "architecture"
+    value = "replicaset"
   }
-
-  depends_on = [ kubernetes_role_binding.spark ]
 }

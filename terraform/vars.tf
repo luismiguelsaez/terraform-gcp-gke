@@ -5,11 +5,11 @@ variable "region" {
 
 variable "project" {
     type = string
-    default = "github-8a4c60fce76a7861"
+    default = "operations-237013"
 }
 
 variable "kubernetes_cluster_name" {
     type = string
-    default = "spark-testing"
+    default = "testing"
 }
 
