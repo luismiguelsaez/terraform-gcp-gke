@@ -5,6 +5,11 @@ This is a simble GKE cluster provisioning module for testing purposes. For a mor
 gcloud auth application-default login
 ```
 
+### Export project and region variables
+```
+export GCLOUD_PROJECT=operations-237013 GCLOUD_REGION=europe-west1
+```
+
 ### Create cluster
 ```
 cd terraform

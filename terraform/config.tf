@@ -15,10 +15,10 @@ terraform {
   }
 }
 
-provider "google" {
-  region = var.region
-  project = var.project
-}
+#provider "google" {
+#  region = var.region
+#  project = var.project
+#}
 
 data "google_client_config" "provider" {}
 
