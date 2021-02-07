@@ -10,7 +10,7 @@ resource "helm_release" "prometheus" {
 resource "helm_release" "mongodb" {
   name       = "mongodb"
 
-  repository = "ttps://charts.bitnami.com/bitnami"
+  repository = "https://charts.bitnami.com/bitnami"
   chart      = "mongodb"
   version    = "10.6.1"
 

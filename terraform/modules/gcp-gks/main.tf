@@ -18,6 +18,10 @@ resource "google_container_cluster" "this" {
   remove_default_node_pool = true
   initial_node_count       = var.control_node_number
 
+  workload_identity_config {
+    identity_namespace = "${var.project_id}.svc.id.goog"
+  }
+
   cluster_autoscaling {
     enabled = var.autoscaling_resource_enabled
     dynamic "resource_limits" {
@@ -36,6 +40,11 @@ resource "google_container_node_pool" "this" {
   location   = var.region
   cluster    = google_container_cluster.this.name
   node_count = var.worker_node_number
+
+  autoscaling {
+    min_node_count = var.worker_node_number
+    max_node_count = 5
+  }
 
   node_config {
     preemptible  = true

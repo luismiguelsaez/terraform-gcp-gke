@@ -3,6 +3,10 @@ variable "region" {
     default = "europe-west1"
 }
 
+variable "project_id" {
+    type = string
+}
+
 variable "cluster_name" {
     type = string
     default = "default"
@@ -33,12 +37,12 @@ variable "autoscaling_resource_limits" {
     default = [
         {
             resource_type = "cpu"
-            minimum       = 1
+            minimum       = 4
             maximum       = 16
         },
         {
             resource_type = "memory"
-            minimum       = 1
+            minimum       = 8
             maximum       = 32
         }
     ]
