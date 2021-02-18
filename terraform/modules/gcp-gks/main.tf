@@ -1,7 +1,13 @@
-#resource "google_service_account" "this" {
-#  account_id   = format("gke-cluster-%s", var.cluster_name)
-#  display_name = format("%s GKE Cluster service account", var.cluster_name)
-#}
+resource "google_service_account" "this" {
+  account_id   = format("gke-cluster-%s", var.cluster_name)
+  display_name = format("%s GKE Cluster service account", var.cluster_name)
+}
+
+resource "google_service_account_iam_member" "this" {
+  service_account_id = google_service_account.this.name
+  role               = "roles/owner"
+  member             = "serviceAccount:${google_service_account.this.email}"
+}
 
 data "google_compute_zones" "available" {
   region  = var.region
@@ -20,6 +26,8 @@ resource "random_string" "random" {
 }
 
 resource "google_container_cluster" "this" {
+  provider = google-beta
+
   name     = format("%s-%s", var.cluster_name, random_string.random.result)
   location = var.region
 
@@ -41,6 +49,12 @@ resource "google_container_cluster" "this" {
 
   workload_identity_config {
     identity_namespace = "${var.project_id}.svc.id.goog"
+  }
+
+  addons_config {
+    config_connector_config {
+      enabled = true
+    }
   }
 
   cluster_autoscaling {
@@ -76,7 +90,7 @@ resource "google_container_node_pool" "this" {
     preemptible  = true
     machine_type = var.worker_node_instance_type
 
-    #service_account = google_service_account.this.email
+    service_account = google_service_account.this.email
     oauth_scopes    = [
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/compute",
