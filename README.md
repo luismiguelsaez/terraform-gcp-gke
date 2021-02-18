@@ -20,7 +20,21 @@ terraform apply
 
 ### Get credentials
 ```
+gcloud config set project $GCLOUD_PROJECT
 gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name | sed 's/"//g') --region $(terraform output kubernetes_cluster_region | sed 's/"//g')
+```
+
+### Configure connector
+```
+cat << EOF > ../k8s/gcs/config-connector.yml
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnector
+metadata:
+  name: configconnector.core.cnrm.cloud.google.com
+spec:
+  mode: cluster
+  googleServiceAccount: "$(terraform output kubernetes_cluster_gke_sa_name | sed 's/"//g')@${GCLOUD_PROJECT:-$(terraform output project_id)}.iam.gserviceaccount.com"
+EOF
 ```
 
 ### Install chart ( https://github.com/GoogleCloudPlatform/spark-on-k8s-operator )

@@ -17,18 +17,11 @@ locals {
   autoscaling_resource_limits = var.autoscaling_resource_enabled ? var.autoscaling_resource_limits : []
 }
 
-resource "random_string" "random" {
-  length  = 12
-  number  = false
-  lower   = true
-  upper   = false
-  special = false
-}
-
 resource "google_container_cluster" "this" {
+  # Enabled beta provider, as standard one doesn't allow enabling config connector
   provider = google-beta
 
-  name     = format("%s-%s", var.cluster_name, random_string.random.result)
+  name     = var.cluster_name
   location = var.region
 
   remove_default_node_pool = true
@@ -71,7 +64,7 @@ resource "google_container_cluster" "this" {
 }
 
 resource "google_container_node_pool" "this" {
-  name       = format("%s-%s", var.cluster_name, random_string.random.result)
+  name       = var.cluster_name
   location   = var.region
   cluster    = google_container_cluster.this.name
   node_count = var.worker_node_number

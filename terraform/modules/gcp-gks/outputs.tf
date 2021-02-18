@@ -17,3 +17,11 @@ output "cluster_client_key" {
 output "cluster_ca_certificate" {
     value = google_container_cluster.this.master_auth.0.cluster_ca_certificate
 }
+
+output "cluster_sa_name" {
+    value = google_service_account.this.name
+}
+
+output "cluster_sa_email" {
+    value = google_service_account.this.email
+}
