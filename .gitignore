@@ -7,3 +7,6 @@
 
 # lock files
 *.terraform.lock.hcl
+
+# Generated manifests
+k8s/gcs/*.yml

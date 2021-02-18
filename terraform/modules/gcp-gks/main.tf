@@ -3,6 +3,7 @@ resource "google_service_account" "this" {
   display_name = format("%s GKE Cluster service account", var.cluster_name)
 }
 
+# https://cloud.google.com/config-connector/docs/how-to/install-upgrade-uninstall
 resource "google_project_iam_member" "this" {
   project = var.project_id
   role    = "roles/owner"

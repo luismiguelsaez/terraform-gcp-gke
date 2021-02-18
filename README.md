@@ -27,6 +27,7 @@ gcloud container clusters get-credentials $(terraform output kubernetes_cluster_
 ### Configure connector
 ```
 cat << EOF > ../k8s/gcs/config-connector.yml
+---
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnector
 metadata:
@@ -35,6 +36,27 @@ spec:
   mode: cluster
   googleServiceAccount: "$(terraform output kubernetes_cluster_gke_sa_email | sed 's/"//g')"
 EOF
+```
+```
+kubectl apply -f ../k8s/gcs/config-connector.yml
+```
+
+### Create example topic resource
+```
+cat << EOF > ../k8s/gcs/pubsub.yml
+---
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubTopic
+metadata:
+  annotations:
+    cnrm.cloud.google.com/project-id: $( terraform output project_id )
+  labels:
+    environment: test
+  name: pubsubtopic-sample
+EOF
+```
+```
+kubectl apply -f ../k8s/gcs/pubsub.yml
 ```
 
 ### Install chart ( https://github.com/GoogleCloudPlatform/spark-on-k8s-operator )
