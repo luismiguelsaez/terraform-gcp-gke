@@ -15,5 +15,5 @@ output "kubernetes_cluster_gke_sa_name" {
 }
 
 output "project_id" {
-    value = data.google_client_config.provider.project_id
+    value = data.google_client_config.provider.project
 }

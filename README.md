@@ -33,7 +33,7 @@ metadata:
   name: configconnector.core.cnrm.cloud.google.com
 spec:
   mode: cluster
-  googleServiceAccount: "$(terraform output kubernetes_cluster_gke_sa_name | sed 's/"//g')@${GCLOUD_PROJECT:-$(terraform output project_id)}.iam.gserviceaccount.com"
+  googleServiceAccount: "$(terraform output kubernetes_cluster_gke_sa_email | sed 's/"//g')"
 EOF
 ```
 

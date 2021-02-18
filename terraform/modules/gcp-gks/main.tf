@@ -3,14 +3,16 @@ resource "google_service_account" "this" {
   display_name = format("%s GKE Cluster service account", var.cluster_name)
 }
 
-resource "google_service_account_iam_member" "this" {
-  service_account_id = google_service_account.this.name
-  role               = "roles/owner"
-  member             = "serviceAccount:${google_service_account.this.email}"
+resource "google_project_iam_member" "this" {
+  project = var.project_id
+  role    = "roles/owner"
+  member  = "serviceAccount:${google_service_account.this.email}"
 }
 
-data "google_compute_zones" "available" {
-  region  = var.region
+resource "google_service_account_iam_member" "this" {
+  service_account_id = google_service_account.this.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${var.project_id}.svc.id.goog[cnrm-system/cnrm-controller-manager]"
 }
 
 locals {
