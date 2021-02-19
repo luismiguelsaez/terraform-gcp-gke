@@ -31,7 +31,7 @@ resource "google_container_cluster" "this" {
   initial_node_count       = var.control_node_number
 
   node_config {
-    preemptible = true
+    preemptible = false
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
       "https://www.googleapis.com/auth/devstorage.read_write",
