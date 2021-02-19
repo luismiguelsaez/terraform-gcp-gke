@@ -16,10 +16,6 @@ resource "google_service_account_iam_member" "this" {
   member             = "serviceAccount:${var.project_id}.svc.id.goog[cnrm-system/cnrm-controller-manager]"
 }
 
-locals {
-  autoscaling_resource_limits = var.autoscaling_resource_enabled ? var.autoscaling_resource_limits : []
-}
-
 resource "google_container_cluster" "this" {
   # Enabled beta provider, as standard one doesn't allow enabling config connector
   provider = google-beta
@@ -50,18 +46,6 @@ resource "google_container_cluster" "this" {
   addons_config {
     config_connector_config {
       enabled = true
-    }
-  }
-
-  cluster_autoscaling {
-    enabled = var.autoscaling_resource_enabled
-    dynamic "resource_limits" {
-      for_each = local.autoscaling_resource_limits
-      content {
-        resource_type = resource_limits.value.resource_type
-        minimum = resource_limits.value.minimum
-        maximum = resource_limits.value.maximum
-      }
     }
   }
 

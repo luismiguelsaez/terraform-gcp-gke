@@ -1,6 +1,5 @@
 # Default values for configconnector.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+---
 
 gcloud:
   project:
