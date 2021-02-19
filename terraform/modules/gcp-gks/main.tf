@@ -64,6 +64,10 @@ resource "google_container_cluster" "this" {
       }
     }
   }
+
+  lifecycle {
+    ignore_changes = [node_config]
+  }
 }
 
 resource "google_container_node_pool" "this" {
