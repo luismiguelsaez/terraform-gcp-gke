@@ -12,14 +12,16 @@ gcloud:
     - pubsub.googleapis.com
   resources:
     topics:
-      - name: test
+      - name: worker-test
+    buckets:
+      - name: worker-test
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 namespace:
-  create: true
+  create: false
   name: test
 
 serviceAccount:

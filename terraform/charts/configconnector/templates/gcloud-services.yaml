@@ -1,12 +1,16 @@
-{{- range $key, $value := .Values.gcloud.services -}}
+
+
+{{ range $key, $value := .Values.gcloud.services }}
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
   name: {{ $value }}
   namespace: {{ $.Values.namespace.name }}
-{{- end -}}
-{{- range $key, $value := .Values.gcloud.resources.topics -}}
+{{ end }}
+
+
+{{ range $key, $value := .Values.gcloud.resources.topics }}
 ---
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
@@ -18,4 +22,21 @@ metadata:
   labels:
     environment: test
   name: {{ $value.name }}
-{{- end -}}
+{{ end }}
+
+{{ range $key, $value := .Values.gcloud.resources.buckets }}
+---
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucket
+metadata:
+  annotations:
+    cnrm.cloud.google.com/force-destroy: "true"
+    cnrm.cloud.google.com/project-id: {{ $.Values.gcloud.project }}
+  name: {{ $value.name }}
+spec:
+  lifecycleRule:
+    - action:
+        type: Delete
+      condition:
+        age: 7
+{{ end }}
