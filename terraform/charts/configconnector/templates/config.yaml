@@ -1,11 +1,10 @@
-{{- if .Values.gcloud -}}
+{{- if .Values.gcloud.configconnector -}}
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnector
 metadata:
   name: configconnector.core.cnrm.cloud.google.com
-  namespace: {{ $.Values.namespace.name }}
   app.kubernetes.io/managed-by: Helm
 spec:
   mode: cluster
-  googleServiceAccount: {{ .Values.gcloud.serviceaccount.email }}
-{{- end }}
+  googleServiceAccount: "{{ .Values.gcloud.serviceaccount.email }}"
+{{- end -}}

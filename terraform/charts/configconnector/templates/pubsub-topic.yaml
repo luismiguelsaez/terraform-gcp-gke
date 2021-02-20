@@ -1,4 +1,4 @@
-{{- range $key, $value := .Values.gcloud.topics -}}
+{{- range $key, $value := .Values.gcloud.resources.topics -}}
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata:

@@ -12,11 +12,6 @@ variable "cluster_name" {
     default = "default"
 }
 
-variable "control_node_number" {
-    type = number
-    default = 1
-}
-
 variable "worker_node_number" {
     type = number
     default = 1

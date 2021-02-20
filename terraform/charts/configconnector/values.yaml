@@ -2,12 +2,16 @@
 ---
 
 gcloud:
-  project:
+  project: ""
+  configconnector: false
   serviceaccount:
-    name:
-    email:
-  topics:
-    - name: test
+    name: ""
+    email: ""
+  services:
+    - storage.googleapis.com
+  resources:
+    topics:
+      - name: test
 
 imagePullSecrets: []
 nameOverride: ""

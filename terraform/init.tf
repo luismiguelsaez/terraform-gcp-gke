@@ -3,7 +3,6 @@ module "cluster" {
     cluster_name = var.kubernetes_cluster_name
     region = data.google_client_config.provider.region
     project_id = data.google_client_config.provider.project
-    control_node_number = 2
     worker_node_number = 3
     worker_node_instance_type = "e2-medium"
 }
