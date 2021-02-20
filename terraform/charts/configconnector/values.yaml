@@ -9,6 +9,7 @@ gcloud:
     email: ""
   services:
     - storage.googleapis.com
+    - pubsub.googleapis.com
   resources:
     topics:
       - name: test
