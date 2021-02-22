@@ -4,6 +4,11 @@ resource "kubectl_manifest" "configconnector" {
     depends_on = [module.cluster]
 }
 
+resource "time_sleep" "wait_60_seconds" {
+    create_duration = "60s"
+    depends_on = [kubectl_manifest.configconnector]
+}
+
 resource "helm_release" "this" {
     name       = "configconnector"
     chart      = "./charts/configconnector"
@@ -18,5 +23,5 @@ resource "helm_release" "this" {
         value = data.google_client_config.provider.project
     }
 
-    depends_on = [kubectl_manifest.configconnector]
+    depends_on = [time_sleep.wait_60_seconds]
 }
