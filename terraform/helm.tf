@@ -1,6 +1,7 @@
 
 resource "kubectl_manifest" "configconnector" {
     yaml_body = templatefile("k8s/configconnector.yml",{ sa_mail = module.cluster.cluster_sa_email })
+    depends_on = [module.cluster]
 }
 
 resource "helm_release" "this" {

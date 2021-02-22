@@ -21,7 +21,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 namespace:
-  create: false
+  create: true 
   name: test
 
 serviceAccount:
