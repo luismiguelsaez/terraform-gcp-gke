@@ -16,6 +16,12 @@ data "google_iam_policy" "this" {
       "serviceAccount:${google_service_account.this.email}",
     ]
   }
+  binding {
+    role = "roles/owner"
+    members = [
+      "serviceAccount:${google_service_account.this.email}",
+    ]
+  }
 }
 
 resource "google_project_iam_policy" "this" {
