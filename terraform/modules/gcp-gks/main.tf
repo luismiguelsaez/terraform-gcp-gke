@@ -3,12 +3,32 @@ resource "google_service_account" "this" {
   display_name = format("%s GKE Cluster service account", var.cluster_name)
 }
 
-# https://cloud.google.com/config-connector/docs/how-to/install-upgrade-uninstall
-resource "google_project_iam_member" "this" {
-  project = var.project_id
-  role    = "roles/owner"
-  member  = "serviceAccount:${google_service_account.this.email}"
+data "google_iam_policy" "this" {
+  binding {
+    role = "roles/storage.admin"
+    members = [
+      "serviceAccount:${google_service_account.this.email}",
+    ]
+  }
+  binding {
+    role = "roles/pubsub.admin"
+    members = [
+      "serviceAccount:${google_service_account.this.email}",
+    ]
+  }
 }
+
+resource "google_project_iam_policy" "this" {
+  project     = var.project_id
+  policy_data = data.google_iam_policy.this
+}
+
+# https://cloud.google.com/config-connector/docs/how-to/install-upgrade-uninstall
+#resource "google_project_iam_member" "this" {
+#  project = var.project_id
+#  role    = "roles/owner"
+#  member  = "serviceAccount:${google_service_account.this.email}"
+#}
 
 resource "google_service_account_iam_member" "this" {
   service_account_id = google_service_account.this.name
