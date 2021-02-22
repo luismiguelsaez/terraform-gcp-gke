@@ -26,7 +26,7 @@ data "google_iam_policy" "this" {
 
 resource "google_project_iam_policy" "this" {
   project     = var.project_id
-  policy_data = data.google_iam_policy.this
+  policy_data = data.google_iam_policy.this.policy_data
 }
 
 # https://cloud.google.com/config-connector/docs/how-to/install-upgrade-uninstall
